@@ -1,0 +1,55 @@
+version: "3.9"
+services:
+  database:
+    container_name: "${APP_NAME}-database"
+    image: "mysql:8.0-debian"
+    restart: "unless-stopped"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DATABASE_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${DATABASE_NAME}"
+      MYSQL_USER: "${DATABASE_USER}"
+      MYSQL_PASSWORD: "${DATABASE_PASSWORD}"
+    volumes:
+      - "./docker/mysql:/var/lib/mysql"
+    logging:
+      driver: "none"
+  phpmyadmin:
+    container_name: "${APP_NAME}-phpmyadmin"
+    image: "phpmyadmin:5.2"
+    restart: "unless-stopped"
+    environment:
+      PMA_HOST: "${DATABASE_HOST}"
+    ports:
+      - "2002:80"
+    depends_on:
+      - "database"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.${APP_NAME}-phpmyadmin.entrypoints=websecure"
+      - "traefik.http.routers.${APP_NAME}-phpmyadmin.rule=Host(`phpmyadmin.${HOST_NAME}`)"
+      - "traefik.http.routers.${APP_NAME}-phpmyadmin.tls=true"
+    logging:
+      driver: "none"
+  app:
+    container_name: "${APP_NAME}"
+    build:
+      context: "./"
+      dockerfile: "Dockerfile.${MODE}"
+    ports:
+      - "2000:8080"
+    depends_on:
+      - "database"
+    volumes:
+      - "./:/usr/src/app"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.${APP_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${HOST_NAME}`)"
+      - "traefik.http.routers.${APP_NAME}.tls=true"
+networks:
+  default:
+    name: "proxy"
+    external: true
+    
