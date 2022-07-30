@@ -1,0 +1,26 @@
+@use "variables";
+@use "@app/scss/utils/mixins";
+
+:root {
+  @include mixins.setCustomProperties(variables.$globals);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    @include mixins.setCustomProperties(variables.$light);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include mixins.setCustomProperties(variables.$dark);
+  }
+}
+
+html[data-theme="light"] {
+  @include mixins.setCustomProperties(variables.$light);
+}
+
+html[data-theme="dark"] {
+  @include mixins.setCustomProperties(variables.$dark);
+}

@@ -31,23 +31,39 @@ services:
       - "traefik.http.routers.${APP_NAME}-phpmyadmin.tls=true"
     logging:
       driver: "none"
-  app:
-    container_name: "${APP_NAME}"
+  backend:
+    container_name: "${APP_NAME}-backend"
     build:
-      context: "./"
+      context: "./apps/backend/"
       dockerfile: "Dockerfile.${MODE}"
     ports:
       - "2000:8080"
     depends_on:
       - "database"
     volumes:
-      - "./:/usr/src/app"
+      - "./apps/backend:/usr/src/app"
+      - "./.env:/usr/src/app/.env:ro"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
       - "traefik.http.routers.${APP_NAME}.entrypoints=websecure"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${HOST_NAME}`)"
       - "traefik.http.routers.${APP_NAME}.tls=true"
+  frontend:
+    container_name: "${APP_NAME}-frontend"
+    build:
+      context: "./apps/frontend/"
+      dockerfile: "Dockerfile.${MODE}"
+    ports:
+      - "2001:5173"
+    volumes:
+      - "./apps/frontend:/usr/src/app"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.${APP_NAME}-frontend.entrypoints=websecure"
+      - "traefik.http.routers.${APP_NAME}-frontend.rule=Host(`frontend.${HOST_NAME}`)"
+      - "traefik.http.routers.${APP_NAME}-frontend.tls=true"
 networks:
   default:
     name: "proxy"

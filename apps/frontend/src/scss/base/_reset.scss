@@ -1,0 +1,36 @@
+@use "@app/scss/utils";
+
+* {
+  &,
+  &::before,
+  &::after {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  font-family: utils.prop("font-family-default");
+  font-size: utils.rootFontSize(utils.value("font-size-default"));
+  line-height: utils.prop("line-height-default");
+  color: utils.prop("color-text-400");
+  background-color: utils.prop("color-background-400");
+}
+
+body {
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+a {
+  color: utils.prop("color-primary-400");
+  text-decoration: none;
+  background-image: linear-gradient(90deg, utils.prop("color-primary-400") 50%, transparent 50%);
+  background-size: 201%;
+  background-position: 100%;
+  transition: utils.prop("transition-default");
+
+  &:hover {
+    background-position: 0;
+    color: utils.prop("color-light");
+  }
+}

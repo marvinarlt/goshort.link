@@ -1,0 +1,11 @@
+.branding {
+  display: block;
+  width: 100%;
+  max-width: 8rem;
+
+  &-item {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}

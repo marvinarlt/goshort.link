@@ -1,0 +1,24 @@
+@use "@app/scss/utils";
+
+.button {
+  cursor: pointer;
+  display: inline-block;
+  padding: 1.5rem 3rem;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: utils.prop("color-light");
+  background-color: utils.prop("color-primary-400");
+  border-radius: utils.prop("border-radius-default");
+  border: none;
+  transition: utils.prop("transition-default");
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: utils.prop("color-primary-300");
+    box-shadow: 0 0 1rem 0.1rem rgba(utils.prop("color-primary-300-rgb"), 0.8)
+  }
+}
