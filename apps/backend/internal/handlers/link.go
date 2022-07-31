@@ -38,7 +38,7 @@ func NewLink(response http.ResponseWriter, request *http.Request) {
 
 // Redirect based on the id
 func GetLink(response http.ResponseWriter, request *http.Request) {
-	// request.Body.Close()
+	request.Body.Close()
 
 	link := models.Link{
 		Id: mux.Vars(request)["id"],

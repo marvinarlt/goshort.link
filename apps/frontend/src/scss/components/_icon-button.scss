@@ -7,7 +7,7 @@
   align-items: center;
   width: 2.5rem;
   height: 2.5rem;
-  background-color: utils.prop("color-button-300");
+  background-color: utils.prop("color-button-400");
   color: utils.prop("color-primary-400");
   border-radius: utils.prop("border-radius-small");
   border: none;
@@ -16,6 +16,7 @@
   &:focus,
   &:hover {
     outline: none;
-    box-shadow: 0 0 0 utils.rem(2px) utils.prop("color-primary-400");
+    background-color: utils.prop("color-button-300");
+    // box-shadow: 0 0 0 utils.rem(2px) utils.prop("color-primary-400");
   }
 }

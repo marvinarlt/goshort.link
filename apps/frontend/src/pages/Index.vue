@@ -1,9 +1,11 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { CopyIcon } from 'vue-tabler-icons';
+  import { useNotification } from '@app/composables/notification';
   import IconButton from '@app/components/IconButton.vue';
 
   const backendOrigin = import.meta.env.VITE_BACKEND_ORIGIN;
+  const notification = useNotification();
 
   const linkInput = ref('');
   const link = ref(new URL('/RaNdOmId', backendOrigin));
@@ -33,7 +35,11 @@
    */
   const onSubmit = async (): Promise<void> => {
     if (! isUrl(linkInput.value)) {
-      console.log('Invalid URL');
+      notification.add({
+        type: 'error',
+        title: 'notifications.invalid-url.title',
+        body: 'notifications.invalid-url.body'
+      });
       return;
     }
 
@@ -49,8 +55,15 @@
 
       isGenerated.value = true;
       link.value = new URL(`/${data.id}`, backendOrigin);
+      
+      copyLink();
     } catch (error) {
       console.error(error);
+      notification.add({
+        type: 'error',
+        title: 'notifications.generating-failed.title',
+        body: 'notifications.generating-failed.body'
+      });
     }
   }
 
@@ -62,15 +75,27 @@
    */
   const copyLink = async (): Promise<void> => {
     if (! isGenerated.value) {
-      console.log('Generate a shortlink first');
+      notification.add({
+        type: 'warning',
+        title: 'notifications.not-copied.title',
+        body: 'notifications.not-copied.body'
+      });
       return;
     }
 
     try {
       await navigator.clipboard.writeText(link.value.toString());
-      console.log('Copied to clipboard')
+      notification.add({
+        type: 'success',
+        title: 'notifications.copied.title',
+        body: 'notifications.copied.body'
+      });
     } catch {
-      console.log('Copy to clipboard failed');
+      notification.add({
+        type: 'error',
+        title: 'notifications.copying-failed.title',
+        body: 'notifications.copying-failed.body'
+      });
     }
   }
 </script>
@@ -81,7 +106,13 @@
       <IconButton @click="copyLink">
         <CopyIcon />
       </IconButton>
-      <a class="index-result-link" target="_blank" title="Generated shortlink" :class="{ 'disabled': ! isGenerated }" :href="link.toString()">{{ link.toString() }}</a>
+      <a
+        class="index-result-link"
+        target="_blank"
+        :title="$t('pages.index.shortend-title')"
+        :class="{ 'disabled': ! isGenerated }"
+        :href="link.toString()"
+      >{{ link.toString() }}</a>
     </div>
     <form class="index-form" @submit.prevent="onSubmit">
       <input
@@ -89,11 +120,11 @@
         type="url"
         name="url"
         id="url"
-        placeholder="https://www.example.com/your/super/long/url"
+        :placeholder="$t('pages.index.placeholder')"
         required
         v-model="linkInput"
       >
-      <button class="index-form-submit button" type="submit">Shorten</button>
+      <button class="index-form-submit button" type="submit">{{ $t('pages.index.submit') }}</button>
     </form>
   </div>
 </template>

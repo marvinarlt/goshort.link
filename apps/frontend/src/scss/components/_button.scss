@@ -19,6 +19,5 @@
 
   &:hover {
     background-color: utils.prop("color-primary-300");
-    box-shadow: 0 0 1rem 0.1rem rgba(utils.prop("color-primary-300-rgb"), 0.8)
   }
 }

@@ -2,8 +2,11 @@
 
 .app {
   &-wrapper {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     max-width: utils.prop("max-width-default");
+    min-height: 100vh;
     margin-inline: auto;
     padding-inline: 1rem;
   }
@@ -26,7 +29,7 @@
   &-main {
     width: 100%;
     max-width: utils.prop("max-width-component");
-    margin-inline: auto;
+    margin: auto;
     padding-block: 3rem;
   }
 
@@ -34,6 +37,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+    margin-top: auto;
     padding-block: 3rem;
     font-size: utils.prop("font-size-small");
     line-height: utils.prop("line-height-default");

@@ -1,0 +1,56 @@
+{
+  "locales": {
+    "en": "English",
+    "de": "German"
+  },
+  "flag-icons": {
+    "en": "Flag icon of Great Britain",
+    "de": "Flag icon of Germany"
+  },
+  "branding": {
+    "alt": "The branding of GoShort.link"
+  },
+  "navigation": {
+    "index": {
+      "label": "Home",
+      "title": "GoShort.link"
+    },
+    "legal-notice": {
+      "label": "Legal Notice",
+      "title": "Legal Notice - GoShort.link"
+    },
+    "privacy-policy": {
+      "label": "Privacy Policy",
+      "title": "Privacy Policy - GoShort.link"
+    }
+  },
+  "pages": {
+    "index": {
+      "shortend-title": "Your generated shortlink",
+      "placeholder": "https://www.example.com/your/super/long/url",
+      "submit": "Shorten"
+    }
+  },
+  "notifications": {
+    "not-copied": {
+      "title": "Not copied",
+      "body": "You must generate a shortlink first before you can copy one."
+    },
+    "copied": {
+      "title": "Copied",
+      "body": "Shortend url copied to clipboard."
+    },
+    "copying-failed": {
+      "title": "An error occured",
+      "body": "Could not copy shortend url to clipboard. Please try again or by hand."
+    },
+    "invalid-url": {
+      "title": "Invalid URL",
+      "body": "The entered URL is invalid. Please check the entered URL."
+    },
+    "generating-failed": {
+      "title": "An error occured",
+      "body": "Generating a shortlink failed. Please try again later."
+    }
+  }
+}

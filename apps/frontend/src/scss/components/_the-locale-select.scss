@@ -1,0 +1,131 @@
+@use "@app/scss/utils";
+
+.locale-select {
+  position: relative;
+  display: inline-block;
+
+  &-button {
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0;
+    background-color: utils.prop('color-button-400');
+    color: utils.prop('color-primary-400');
+    border-radius: utils.prop('border-radius-small');
+    line-height: utils.prop('line-height-default');
+    transition: utils.prop('transition-default');
+
+    &-flag {
+    }
+
+    &-label {
+
+    }
+
+    &-icon {
+      display: block;
+      margin: 0 0 0 auto;
+
+      > .icon {
+        transition: utils.prop('transition-default');
+      }
+    }
+
+    &:hover {
+      background-color: utils.prop('color-button-300');
+    }
+  }
+
+  &-list {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    display: block;
+    width: 100vw;
+    max-width: 12rem;
+    max-height: 10rem;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    background-color: utils.prop('color-button-400');
+    border-radius: utils.prop('border-radius-small');
+    transition: utils.prop('transition-default');
+    transform: translateY(-1rem);
+    overflow: auto;
+    visibility: hidden;
+    opacity: 0;
+
+    &-item {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      line-height: utils.prop('line-height-default');
+
+      &-icon {
+        margin-right: 0.5rem;
+      }
+
+      &-label {
+        display: block;
+        width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      &.current {
+        background-color: utils.prop('color-button-200');
+      }
+
+      &:hover {
+        background-color: utils.prop('color-button-300');
+      }
+    } 
+  }
+
+  &-flag {
+    display: inline-block;
+    width: utils.rem(utils.value('icon-width-default'));
+    height: utils.rem(utils.value('icon-width-default'));
+    border-radius: 50%;
+    vertical-align: text-bottom;
+    overflow: hidden;
+
+    .country-flag {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &.is-open {
+    .locale-select {
+      &-button {
+        background-color: utils.prop("color-primary-400");
+
+        &:hover {
+          background-color: utils.prop("color-primary-300");
+        }
+
+        &-icon {
+          > .icon {
+            transform: rotate(-90deg);
+          }
+        }
+      }
+
+      &-list {
+        transform: translateY(0);
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+}

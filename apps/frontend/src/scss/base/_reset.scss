@@ -14,23 +14,119 @@ html {
   line-height: utils.prop("line-height-default");
   color: utils.prop("color-text-400");
   background-color: utils.prop("color-background-400");
+  transition: background-color utils.prop("transition-default");
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  scroll-behavior: smooth;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  display: block;
+  margin: 0 0 1em 0;
+  font-weight: utils.prop('font-weight-semi-bold');
+  line-height: utils.prop('line-height-small');
+  color: utils.prop('color-text-500');
+
+  > span {
+    display: block;
+    font-size: 0.5em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: utils.prop('color-primary-400');
+  }
+}
+
+h2, .h2 {
+  font-size: utils.rem(utils.value('font-size-h2'));
+}
+
+h3, .h3 {
+  font-size: utils.rem(utils.value('font-size-h3'));
+}
+
+h4, .h4 {
+  font-size: utils.rem(utils.value('font-size-h4'));
+}
+
+h5, .h5 {
+  font-size: utils.rem(utils.value('font-size-h5'));
+}
+
+h6, .h6 {
+  font-size: utils.rem(utils.value('font-size-h6'));
+}
+
+p {
+  margin: 0 0 1.5em 0;
+  font-size: rem(value('font-size-default'));
+  line-height: utils.prop('line-height-default');
+  color: utils.prop('color-text-400');
 }
 
 a {
   color: utils.prop("color-primary-400");
   text-decoration: none;
-  background-image: linear-gradient(90deg, utils.prop("color-primary-400") 50%, transparent 50%);
-  background-size: 201%;
-  background-position: 100%;
   transition: utils.prop("transition-default");
 
   &:hover {
-    background-position: 0;
-    color: utils.prop("color-light");
+    color: utils.prop("color-primary-300");
+  }
+}
+
+dl.styled {
+  dt,
+  dd {
+    display: block;
+    margin: 0;
+    padding: 1rem 1.5rem;
+    background-color: utils.prop("color-background-300");
+  }
+
+  dt {
+    padding-bottom: 0;
+    font-weight: utils.prop("font-weight-semi-bold");
+    border-radius: utils.prop("border-radius-default") utils.prop("border-radius-default") 0 0;
+  }
+
+  dd {
+    padding-top: 0;
+    margin-bottom: 0.5rem;
+    border-radius: 0 0 utils.prop("border-radius-default") utils.prop("border-radius-default");
+
+    &:last-of-type {
+      margin-bottom: 1.5em;
+    }
+  }
+}
+
+ul.styled {
+  margin: 0;
+  padding-left: 2.5rem;
+  list-style-type: none;
+
+  &:not(.nomargin) {
+    margin-bottom: 1.5rem;
+  }
+
+  li {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0.5em;
+      left: -1.5rem;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 0.125rem;
+      background-color: utils.prop("color-primary-400");
+    }
   }
 }

@@ -1,0 +1,56 @@
+{
+  "locales": {
+    "en": "Englisch",
+    "de": "Deutsch"
+  },
+  "flag-icons": {
+    "en": "Flaggen Icon von Großbritannien",
+    "de": "Flaggen Icon von Deutschland"
+  },
+  "branding": {
+    "alt": "Das Branding von GoShort.link"
+  },
+  "navigation": {
+    "index": {
+      "label": "Start",
+      "title": "GoShort.link"
+    },
+    "legal-notice": {
+      "label": "Impressum",
+      "title": "Impressum - GoShort.link"
+    },
+    "privacy-policy": {
+      "label": "Datenschutz",
+      "title": "Datenschutz - GoShort.link"
+    }
+  },
+  "pages": {
+    "index": {
+      "shortend-title": "Dein generierter Kurz-Link",
+      "placeholder": "https://www.beispiel.de/deine/super/lange/url",
+      "submit": "Kürzen"
+    }
+  },
+  "notifications": {
+    "not-copied": {
+      "title": "Nicht kopiert",
+      "body": "Generiere erst eine gekürzte URL, bevor du versuchst eine zu kopieren."
+    },
+    "copied": {
+      "title": "Kopiert",
+      "body": "Gekürzte URL in Zwischenablage kopiert."
+    },
+    "copying-failed": {
+      "title": "Ein Fehler ist aufgetreten",
+      "body": "Die gekürzte URL konnte nicht kopiert werden. Versuche es erneut oder händisch."
+    },
+    "invalid-url": {
+      "title": "Ungültige URL",
+      "body": "Die eingegebene URL ist ungültig. Überprüfe die eingegebene URL."
+    },
+    "generating-failed": {
+      "title": "Ein Fehler ist aufgetreten",
+      "body": "Es konnte keine gekürzte URL generiert werden. Versuche es später erneut."
+    }
+  }
+}

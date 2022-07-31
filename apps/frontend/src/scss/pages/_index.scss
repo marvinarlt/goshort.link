@@ -51,7 +51,7 @@
 
       &:focus {
         outline: none;
-        box-shadow: 0 0 0 utils.rem(2px) utils.prop("color-primary-400");
+        box-shadow: inset 0 0 0 utils.rem(2px) utils.prop("color-primary-400");
       }
 
       &::placeholder {

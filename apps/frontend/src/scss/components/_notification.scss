@@ -1,0 +1,70 @@
+@use "@app/scss/utils";
+
+.notifications {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  width: calc(100% - 2rem);
+  max-width: 20rem;
+}
+
+.notification {
+  display: block;
+  padding: 0.5rem;
+  font-size: utils.prop('font-size-small');
+  border-radius: utils.prop('border-radius-tiny');
+  backdrop-filter: blur(0.5rem);
+  transition: utils.prop('transition-default');
+
+  &-title {
+    margin-bottom: 0.25em;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  &-body {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  &-info {
+    background-color: utils.prop('color-background-100');
+    color: utils.prop('color-text-400');
+  }
+
+  &-success {
+    background-color: rgba(utils.prop('color-success-rgb'), 0.2);
+    color: utils.prop('color-success');
+  }
+
+  &-warning {
+    background-color: rgba(utils.prop('color-warning-rgb'), 0.2);
+    color: utils.prop('color-warning');
+  }
+
+  &-error {
+    background-color: rgba(utils.prop('color-error-rgb'), 0.2);
+    color: utils.prop('color-error');
+  }
+
+  &-move,
+  &-enter-active,
+  &-leave-active {
+    transition: utils.prop('transition-default');
+    transform-origin: center top;
+  }
+
+  &-enter-from {
+    transform: translateX(calc(100% + 1rem));
+    opacity: 0;
+  }
+
+  &-leave-to {
+    transform: translateX(calc(100% + 1rem));
+    opacity: 0;
+  }
+}

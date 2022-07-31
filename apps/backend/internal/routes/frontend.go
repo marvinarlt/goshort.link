@@ -8,7 +8,7 @@ import (
 
 func NewFrontend(router *mux.Router) {
 	router.HandleFunc("/", serveIndex)
-	router.HandleFunc("/imprint", serveIndex)
+	router.HandleFunc("/legal-notice", serveIndex)
 	router.HandleFunc("/privacy-policy", serveIndex)
 }
 
