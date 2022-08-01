@@ -1,12 +1,24 @@
-FROM golang:1.18-alpine3.16
+## Build
+FROM golang:1.18-alpine3.16 AS build
 
 WORKDIR /usr/src/app
 
-COPY go.mod ./
-COPY go.sum ./
-RUN go mod download && go mod verify
+COPY ./go.mod ./
+COPY ./go.sum ./
+
+RUN go mod download
 
 COPY ./ ./
-RUN go build -o /app
 
-ENTRYPOINT ["/app"]
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./bin/goshort ./cmd/goshort/main.go
+
+## Deploy
+FROM gcr.io/distroless/base-debian10
+
+WORKDIR /srv/www/
+
+COPY --from=build /usr/src/app/bin/goshort ./
+
+USER nonroot:nonroot
+
+CMD ["./goshort"]

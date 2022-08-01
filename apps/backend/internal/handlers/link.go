@@ -28,7 +28,13 @@ func NewLink(response http.ResponseWriter, request *http.Request) {
 
 	services.DB.Select("id", "url").Create(&link)
 
-	response.Header().Set("Access-Control-Allow-Origin", os.Getenv("FRONTEND_CORS"))
+	corsHost := os.Getenv("CORS_HOST_DEV")
+
+	if "production" == os.Getenv("MODE") {
+		corsHost = os.Getenv("CORS_HOST_PROD")
+	}
+
+	response.Header().Set("Access-Control-Allow-Origin", corsHost)
 	response.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	response.Header().Set("Access-Control-Allow-Methods", "POST")
 	response.WriteHeader(http.StatusOK)

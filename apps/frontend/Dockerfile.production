@@ -1,0 +1,20 @@
+FROM node:18-alpine3.14
+
+WORKDIR /usr/src/app
+
+RUN npm install -g npm
+
+COPY ./package.json ./
+COPY ./package-lock.json ./
+
+RUN npm install
+
+COPY ./ ./
+
+RUN rm -R ./dist
+RUN mkdir ./dist
+RUN chown -R node:node ./dist
+
+USER node
+
+CMD ["npm", "run", "build"]

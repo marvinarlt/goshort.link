@@ -1,4 +1,4 @@
-import { join, resolve } from 'path';
+import { resolve, join } from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
@@ -10,4 +10,8 @@ export default defineConfig({
       '@app': resolve(__dirname, 'src')
     }
   },
+  build: {
+    emptyOutDir: true,
+    outDir: join(__dirname, 'dist')
+  }
 });

@@ -7,11 +7,6 @@ import (
 )
 
 func NewFrontend(router *mux.Router) {
-	router.HandleFunc("/", serveIndex)
-	router.HandleFunc("/legal-notice", serveIndex)
-	router.HandleFunc("/privacy-policy", serveIndex)
-}
-
-func serveIndex(response http.ResponseWriter, request *http.Request) {
-	http.ServeFile(response, request, "./frontend/dist/index.html")
+	fileServer := http.FileServer(http.Dir("./dist"))
+	router.PathPrefix("/").Handler(fileServer).Methods("GET")
 }

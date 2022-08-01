@@ -8,5 +8,5 @@ import (
 // Create new link routes
 func NewShortener(router *mux.Router) {
 	router.HandleFunc("/api/link", handlers.NewLink).Methods("POST")
-	router.HandleFunc("/{id}", handlers.GetLink).Methods("GET")
+	router.HandleFunc("/{id:[a-zA-Z0-9]{12}}", handlers.GetLink).Methods("GET")
 }
