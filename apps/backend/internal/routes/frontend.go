@@ -7,6 +7,6 @@ import (
 )
 
 func NewFrontend(router *mux.Router) {
-	fileServer := http.FileServer(http.Dir("./dist"))
+	fileServer := http.FileServer(http.Dir("./public"))
 	router.PathPrefix("/").Handler(fileServer).Methods("GET")
 }

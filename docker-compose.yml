@@ -1,77 +1,72 @@
 version: "3.9"
 services:
   database:
-    container_name: "${APP_NAME}-database"
     image: "mysql:8.0-debian"
     restart: "unless-stopped"
     environment:
-      MYSQL_ROOT_PASSWORD: "${DATABASE_ROOT_PASSWORD}"
-      MYSQL_DATABASE: "${DATABASE_NAME}"
-      MYSQL_USER: "${DATABASE_USER}"
-      MYSQL_PASSWORD: "${DATABASE_PASSWORD}"
+      MYSQL_HOST: ${DATABASE_HOST}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
       - "./docker/mysql:/var/lib/mysql"
-    logging:
-      driver: "none"
-  phpmyadmin:
-    container_name: "${APP_NAME}-phpmyadmin"
+  pma:
     image: "phpmyadmin:5.2"
     restart: "unless-stopped"
     environment:
-      PMA_HOST: "${DATABASE_HOST}"
+      PMA_HOST: "database"
     ports:
-      - "2002:80"
+      - "${PMA_PORT}:80"
     depends_on:
       - "database"
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
-      - "traefik.http.routers.${APP_NAME}-phpmyadmin.entrypoints=websecure"
-      - "traefik.http.routers.${APP_NAME}-phpmyadmin.rule=Host(`phpmyadmin.${HOST_NAME}`)"
-      - "traefik.http.routers.${APP_NAME}-phpmyadmin.tls=true"
-    logging:
-      driver: "none"
+      - "traefik.docker.network=${TRAEFIK_NETWORK}"
+      - "traefik.http.routers.goshort-pma.entrypoints=websecure"
+      - "traefik.http.routers.goshort-pma.rule=Host(`${TRAEFIK_PMA_SUBDOMAIN}.${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.goshort-pma.tls=true"
   backend:
-    container_name: "${APP_NAME}-backend"
     build:
       context: "./apps/backend/"
-      dockerfile: "Dockerfile.${MODE}"
+      dockerfile: "Dockerfile"
+      target: ${ENVIRONMENT}
     env_file:
       - "./.env"
     ports:
-      - "2000:8080"
+      - "${BACKEND_PORT}:8080"
     depends_on:
       - "database"
     volumes:
       - "./apps/backend:/usr/src/app"
-      - "shared:/srv/www/dist"
+      - "shared:/srv/www/public"
+      # - "shared:/usr/src/app/public"
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
-      - "traefik.http.routers.${APP_NAME}.entrypoints=websecure"
-      - "traefik.http.routers.${APP_NAME}.rule=Host(`${HOST_NAME}`)"
-      - "traefik.http.routers.${APP_NAME}.tls=true"
+      - "traefik.docker.network=${TRAEFIK_NETWORK}"
+      - "traefik.http.routers.goshort-backend.entrypoints=websecure"
+      - "traefik.http.routers.goshort-backend.rule=Host(`${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.goshort-backend.tls=true"
   frontend:
-    container_name: "${APP_NAME}-frontend"
     build:
       context: "./apps/frontend/"
-      dockerfile: "Dockerfile.${MODE}"
+      dockerfile: "Dockerfile"
+      target: ${ENVIRONMENT}
     ports:
-      - "2001:5173"
+      - "${FRONTEND_PORT}:5173"
     volumes:
       - "./apps/frontend:/usr/src/app"
       - "shared:/usr/src/app/dist"
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
-      - "traefik.http.routers.${APP_NAME}-frontend.entrypoints=websecure"
-      - "traefik.http.routers.${APP_NAME}-frontend.rule=Host(`frontend.${HOST_NAME}`)"
-      - "traefik.http.routers.${APP_NAME}-frontend.tls=true"
+      - "traefik.docker.network=${TRAEFIK_NETWORK}"
+      - "traefik.http.routers.goshort-frontend.entrypoints=websecure"
+      - "traefik.http.routers.goshort-frontend.rule=Host(`${TRAEFIK_FRONTEND_SUBDOMAIN}.${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.goshort-frontend.tls=true"
 volumes:
   shared:
     driver: "local"
 networks:
   default:
-    name: "proxy"
+    name: ${TRAEFIK_NETWORK}
     external: true
     

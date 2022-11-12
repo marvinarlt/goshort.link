@@ -11,14 +11,14 @@ import (
 )
 
 func RemoveUnused() {
-	intervalRaw := os.Getenv("APP_CLEANUP_INTERVAL")
+	intervalRaw := os.Getenv("BACKEND_CLEANUP_INTERVAL")
 	interval, err := strconv.Atoi(intervalRaw)
 
 	if nil != err {
-		log.Fatalln(consts.PREFIX, "APP_CLEANUP_INTERVAL needs to be an integer")
+		log.Fatalln(consts.PREFIX, "BACKEND_CLEANUP_OLDER_THAN needs to be an integer")
 	}
 
-	sql := fmt.Sprintf("DELETE FROM links WHERE latest_use < (NOW() - INTERVAL %s Day) OR latest_use IS NULL", os.Getenv("APP_CLEANUP_OLDER_THAN"))
+	sql := fmt.Sprintf("DELETE FROM links WHERE latest_use < (NOW() - INTERVAL %s Day) OR latest_use IS NULL", os.Getenv("BACKEND_CLEANUP_OLDER_THAN"))
 
 	ticker := time.NewTicker(time.Duration(interval) * time.Hour)
 	channel := make(chan struct{})
